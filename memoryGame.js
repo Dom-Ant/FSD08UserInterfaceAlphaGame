@@ -10,7 +10,8 @@ const arrImg = ["images/1.jpg"
     , "images/8.jpg"
     , "images/9.jpg"
 ];
-
+const cardsNum = 12;
+var cardShowing = -1;
 function initialize(blnStart) {
     
     if (blnStart) {
@@ -26,35 +27,122 @@ function initialize(blnStart) {
     }
 
 }
-const cardsNum = 12;
+
+
 function newGame() {
 
     initialize(false);
     //clear vars
-    
+    cardShowing = -1;
     
     //fill cards
     let cardsContainer = document.getElementById("cardsContainer");
-    while (cardsContainer.firstChild){ cardsContainer.removeChild(cardsContainer.firstChild) };
+    while (cardsContainer.firstChild) {
+        cardsContainer.removeChild(cardsContainer.firstChild)
+    };
+    let arrCards = [];
     for (let i = 0; i < cardsNum / 2; i++){
         let randomImg = Math.floor(Math.random() * arrImg.length);
         let card = document.createElement("img");
         card.src = arrImg[randomImg];
         card.style.width = "100px";
         card.style.height = "100px";
+        card.setAttribute("num", randomImg);
+        arrCards.push(card);
+        arrCards.push(card.cloneNode());
         
-        card.setAttribute("num", randomImg);console.log(card);
-        cardsContainer.appendChild(card);
-        cardsContainer.appendChild(card.cloneNode());
+    }
+    shuffle(arrCards);
+    for (let i = 0; i < arrCards.length; i++){
+        arrCards[i].setAttribute("id", `card${i}`);
+        arrCards[i].onclick= turnOver;
+        cardsContainer.appendChild(arrCards[i]);
+        
+    }
+    for (let i = 0; i < cardsContainer.children.length; i++){
+        cardsContainer.children[i].setAttribute("showing", "back");
+    }
+    console.log(cardsContainer.children);
+    
+}
+
+function shuffle(arr) {
+    for (let i = arr.length; i > 0; i--){
+        let j = Math.floor(Math.random() * i);
+        [arr[i - 1], arr[j]] = [arr[j], arr[i - 1]];
+    }
+}
+
+function turnOver(event) {
+    card = event.target;
+    if (card.getAttribute("showing") == "none") return;
+   
+    if (cardShowing == -1) {
+        if (card.getAttribute("showing") == "back") {
+            turn2front(card);
+            cardShowing = card;
+        } else {
+            turn2back(card);
+        }
+    } else if (cardShowing == card) {
+            turn2back(card);
+            cardShowing = -1;
+    } else {
+        turn2front(card);
+        if (card.getAttribute("num") == cardShowing.getAttribute("num")) {
+            card.setAttribute("showing", "none");
+            cardShowing.setAttribute("showing", "none");
+            cardShowing = -1;
+        } else {
+            turn2back(card);
+            turn2back(cardShowing);
+            cardShowing = -1;
+        }
 
     }
-    
+
+    let cardsContainer = document.getElementById("cardsContainer");
+   
+    let gameDone = true;
+    for (let i = 0; i < cardsContainer.children.length; i++){
+        console.log(cardsContainer.children[i]);
+        if (cardsContainer.children[i].getAttribute("showing")!="none"){
+            gameDone = false;
+            break;
+        }
+    }
+
+    if (gameDone) {
+        showScore();
+    }
+    console.log('showing:'+cardShowing);
+    console.log(card);
+        
     
 
 }
+function showScore() {
+    $("#score").append("Success!");
+}
 
+function turn2front(card) {
+    card.setAttribute("showing", "front");
+    
+ 
+}
+function turn2back(card) {
+    card.setAttribute("showing", "back");
 
+}
+
+function closeGame() {
+
+    //clear score
+    $("#score").text("");
+
+    initialize(true);
+}
 
 $(document).on("load",initialize(true));
 $("#btnStart").on("click", newGame);
-$("#btnClose").on("click", initialize);
+$("#btnClose").on("click", closeGame);
