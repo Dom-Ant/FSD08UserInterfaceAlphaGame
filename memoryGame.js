@@ -23,7 +23,9 @@ const arrImg = ["images/1.jpg"
     , "images/8.jpg"
     , "images/9.jpg"
 ];
-const cardsNum = 12;
+
+
+var cardsNum;
 var cardShowing = -1;
 function initialize(blnStart) {
 
@@ -41,6 +43,13 @@ function initialize(blnStart) {
 
 }
 
+function toggleCustom() {
+    if ($("#chooseDiff").val() == "Custom") {
+        $("#customInputContainer").css("display", "block");
+    } else {
+        $("#customInputContainer").css("display", "none");
+    }
+}
 
 function newGame() {
 
@@ -54,6 +63,24 @@ function newGame() {
     while (cardsContainer.firstChild) {
         cardsContainer.removeChild(cardsContainer.firstChild)
     };
+
+    //get cardsNum
+    let diff = document.getElementById("chooseDiff").value;
+    if (diff == "Easy") {
+        cardsNum = 12;
+    } else if (diff == "Medium") {
+        cardsNum = 24;
+    } else if (diff == "Hard") {
+        cardsNum = 36;
+    } else if (diff == "Custom") {
+        let customInput = $("#customInput").val();
+        if (!isNaN(customInput) && customInput % 2 == 0 && customInput !== null && customInput >= 4 && customInput <= 100) {
+            cardsNum = parseInt(customInput);
+        } else {
+            cardsNum = 12;
+            alert("Invalid Custom Number");
+        }
+    }
 
     //generate 6 pairs of cards
     let arrCards = [];
@@ -120,7 +147,7 @@ function turnOver(event) {
     }
 }
 
-function checkFinished(){
+function checkFinished() {
     let cardsContainer = document.getElementById("cardsContainer");
 
     let gameDone = true;
@@ -175,6 +202,11 @@ function closeGame() {
     initialize(true);
 }
 
-$(document).on("load", initialize(true));
-$("#btnStart").on("click", newGame);
-$("#btnClose").on("click", closeGame);
+
+$(document).ready(function () {
+    initialize(true);
+    toggleCustom();
+    $("#btnStart").on("click", newGame);
+    $("#btnClose").on("click", closeGame);
+    $("#chooseDiff").on("change", toggleCustom);
+});
