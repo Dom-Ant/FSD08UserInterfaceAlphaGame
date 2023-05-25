@@ -1,3 +1,16 @@
+//header
+document.addEventListener("DOMContentLoaded", (event) => {
+
+    let header1 = document.getElementById("gameHeader");
+    let h1Top = document.createElement("h1");
+    h1Top.textContent = "Memory Game";
+    header1.appendChild(h1Top);
+    let para1 = document.createElement("p");
+    para1.textContent = "Pair each image to a matching image.";
+    header1.append(para1);
+});
+
+
 
 //img pool
 const arrImg = ["images/1.jpg"
@@ -47,7 +60,7 @@ function newGame() {
     for (let i = 0; i < cardsNum / 2; i++) {
         let randomImg = Math.floor(Math.random() * arrImg.length);
         let card = document.createElement("img");
-        card.src = arrImg[randomImg];
+        card.src = "Images/cardback.jpg";
         card.style.width = "100px";
         card.style.height = "100px";
         card.setAttribute("num", randomImg);
@@ -135,14 +148,20 @@ function turn2front(card) {
 
 }
 function turn2back(card) {
-    card.setAttribute("showing", "back");
-    card.src = "images/cardback.jpg";
+    setTimeout(() => {
+        card.setAttribute("showing", "back");
+        card.src = "images/cardback.jpg";
+    }, 1000);
+
 
 }
 
-function turn2None(card){
-    card.setAttribute("showing", "none");
-    card.src = "Images/Match.jpg";
+function turn2None(card) {
+    setTimeout(() => {
+        card.setAttribute("showing", "none");
+        card.src = "Images/Match.jpg";
+    }, 1000);
+
 }
 
 function closeGame() {
