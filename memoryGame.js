@@ -28,8 +28,8 @@ function resetTimer() {
   document.getElementById('timer-seconds').textContent = "00";
 }
 
-
-
+let currentScore = 0;
+let bestScore = Infinity;
 
 //header
 document.addEventListener("DOMContentLoaded", (event) => {
@@ -55,6 +55,19 @@ document.addEventListener("DOMContentLoaded", (event) => {
     timerSeconds.textContent = "00";
     timer.appendChild(timerSeconds);
     header1.appendChild(timer);
+
+
+    // Add current score element
+    let currentScoreEl = document.createElement("p");
+    currentScoreEl.id = 'current-score';
+    currentScoreEl.textContent = 'Current Score: 0';
+    header1.appendChild(currentScoreEl);
+
+    // Add best score element
+    let bestScoreEl = document.createElement("p");
+    bestScoreEl.id = 'best-score';
+    bestScoreEl.textContent = `Best Score: ${bestScore === Infinity ? '-' : bestScore}`;
+    header1.appendChild(bestScoreEl);
 
 
 });
@@ -108,6 +121,9 @@ function newGame() {
     initialize(false);
     //clear vars
     cardShowing = -1;
+    // Reset the current score
+    currentScore = 0;
+    document.getElementById('current-score').textContent = 'Current Score: 0';
 
     //clear cards
     let cardsContainer = document.getElementById("cardsContainer");
@@ -178,7 +194,8 @@ function turnOver(event) {
             cardShowing = card;
         } else {
             turn2back(card);
-        }
+        } 
+        
     } else if (cardShowing == card) {
         turn2back(card);
         cardShowing = -1;
@@ -194,9 +211,14 @@ function turnOver(event) {
             turn2back(cardShowing);
             cardShowing = -1;
         }
-
+        currentScore++;
+        // Update the current score display
+        document.getElementById('current-score').textContent = `Current Score: ${currentScore}`;
     }
-}
+        } 
+
+    
+
 
 function checkFinished() {
     let cardsContainer = document.getElementById("cardsContainer");
@@ -207,6 +229,11 @@ function checkFinished() {
         if (cardsContainer.children[i].getAttribute("showing") != "none") {
             gameDone = false;
             break;
+        }
+        if (currentScore < bestScore) {
+            bestScore = currentScore;
+            // Update the best score display
+            document.getElementById('best-score').textContent = `Best Score: ${bestScore}`;
         }
     }
 
