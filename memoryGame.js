@@ -1,3 +1,36 @@
+// Initialize timer variables
+let timerInterval;
+let timerCount = 0;
+
+// Function to start the timer
+function startTimer() {
+  // Start the timer and update every second
+  timerInterval = setInterval(() => {
+    timerCount++;
+    // Format time and update timer display
+    let minutes = Math.floor(timerCount / 60);
+    let seconds = timerCount % 60;
+    document.getElementById('timer-minutes').textContent = `${minutes}:`;
+    document.getElementById('timer-seconds').textContent = `${seconds < 10 ? '0' + seconds : seconds}`;
+  }, 1000);
+}
+
+// Function to stop the timer
+function stopTimer() {
+  clearInterval(timerInterval);
+}
+
+// Function to reset the timer
+function resetTimer() {
+  stopTimer();
+  timerCount = 0;
+  document.getElementById('timer-minutes').textContent = "0:";
+  document.getElementById('timer-seconds').textContent = "00";
+}
+
+
+
+
 //header
 document.addEventListener("DOMContentLoaded", (event) => {
 
@@ -8,6 +41,22 @@ document.addEventListener("DOMContentLoaded", (event) => {
     let para1 = document.createElement("p");
     para1.textContent = "Pair each image to a matching image.";
     header1.append(para1);
+
+
+    // Add timer elements
+    let timer = document.createElement("p");
+    timer.textContent = "Time: ";
+    let timerMinutes = document.createElement("span");
+    timerMinutes.id = 'timer-minutes';
+    timerMinutes.textContent = "0:";
+    timer.appendChild(timerMinutes);
+    let timerSeconds = document.createElement("span");
+    timerSeconds.id = 'timer-seconds';
+    timerSeconds.textContent = "00";
+    timer.appendChild(timerSeconds);
+    header1.appendChild(timer);
+
+
 });
 
 
@@ -53,6 +102,8 @@ function toggleCustom() {
 
 function newGame() {
 
+    resetTimer();
+    startTimer();
     //call initialize function
     initialize(false);
     //clear vars
@@ -162,6 +213,12 @@ function checkFinished() {
     if (gameDone) {
         showScore();
     }
+
+    if (gameDone) {
+        stopTimer();
+        showScore();
+    }
+
     console.log('showing:' + cardShowing);
     console.log(card);
 
@@ -210,3 +267,4 @@ $(document).ready(function () {
     $("#btnClose").on("click", closeGame);
     $("#chooseDiff").on("change", toggleCustom);
 });
+
