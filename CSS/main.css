@@ -1,0 +1,20 @@
+body{
+    background: #cff6ef;
+}
+div{
+    width:300px;
+    padding:15px;
+}
+#cardsContainer{
+    border:3px solid #ea9d02;
+}
+header{
+    margin-left: 30px;
+}
+button{
+    background: #ea9d02;
+    height:40px;
+}
+button:hover{
+    background: #ecb954;
+}
