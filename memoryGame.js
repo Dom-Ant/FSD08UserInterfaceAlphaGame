@@ -110,6 +110,7 @@ function turnOver(event) {
             turn2None(card);
             turn2None(cardShowing);
             cardShowing = -1;
+            setTimeout(checkFinished, 1000);
         } else {
             turn2back(card);
             turn2back(cardShowing);
@@ -117,7 +118,9 @@ function turnOver(event) {
         }
 
     }
+}
 
+function checkFinished(){
     let cardsContainer = document.getElementById("cardsContainer");
 
     let gameDone = true;
@@ -136,8 +139,8 @@ function turnOver(event) {
     console.log(card);
 
 
-
 }
+
 function showScore() {
     $("#score").append("Success!");
 }
