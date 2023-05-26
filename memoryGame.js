@@ -4,36 +4,36 @@ let timerCount = 0;
 
 // Function to start the timer
 function startTimer() {
-  // Start the timer and update every second
-  timerInterval = setInterval(() => {
-    timerCount++;
-    // Format time and update timer display
-    let minutes = Math.floor(timerCount / 60);
-    let seconds = timerCount % 60;
-    document.getElementById('timer-minutes').textContent = `${minutes}:`;
-    document.getElementById('timer-seconds').textContent = `${seconds < 10 ? '0' + seconds : seconds}`;
-  }, 1000);
+    // Start the timer and update every second
+    timerInterval = setInterval(() => {
+        timerCount++;
+        // Format time and update timer display
+        let minutes = Math.floor(timerCount / 60);
+        let seconds = timerCount % 60;
+        document.getElementById('timer-minutes').textContent = `${minutes}:`;
+        document.getElementById('timer-seconds').textContent = `${seconds < 10 ? '0' + seconds : seconds}`;
+    }, 1000);
 }
 
 // Function to stop the timer
 function stopTimer() {
-  clearInterval(timerInterval);
+    clearInterval(timerInterval);
 }
 
 // Function to reset the timer
 function resetTimer() {
-  stopTimer();
-  timerCount = 0;
-  document.getElementById('timer-minutes').textContent = "0:";
-  document.getElementById('timer-seconds').textContent = "00";
+    stopTimer();
+    timerCount = 0;
+    document.getElementById('timer-minutes').textContent = "0:";
+    document.getElementById('timer-seconds').textContent = "00";
 }
 
 let currentScore = 0;
 let bestScore = Infinity;
 
-//header
+//html
 document.addEventListener("DOMContentLoaded", (event) => {
-
+    //header
     let header1 = document.getElementById("gameHeader");
     let h1Top = document.createElement("h1");
     h1Top.textContent = "Memory Game";
@@ -69,7 +69,50 @@ document.addEventListener("DOMContentLoaded", (event) => {
     bestScoreEl.textContent = `Best Score: ${bestScore === Infinity ? '-' : bestScore}`;
     header1.appendChild(bestScoreEl);
 
+    //difficulty selector html
+    let labelD = document.createElement("label");
+    labelD.setAttribute("for", "chooseDiff");
+    labelD.textContent = "Select Difficulty:";
+    document.getElementById("gameDifficulty").appendChild(labelD);
 
+    let diffSelect = document.createElement("select");
+    diffSelect.id = "chooseDiff";
+    let optEasy = document.createElement("option");
+    optEasy.value = "Easy";
+    optEasy.text = "Easy (12 cards)";
+    diffSelect.appendChild(optEasy);
+    let optMed = document.createElement("option");
+    optMed.value = "Medium";
+    optMed.text = "Medium (24 cards)";
+    diffSelect.appendChild(optMed);
+    let optHard = document.createElement("option");
+    optHard.value = "Hard";
+    optHard.text = "Hard (36 cards)";
+    diffSelect.appendChild(optHard);
+    let optCustom = document.createElement("option");
+    optCustom.value = "Custom";
+    optCustom.text = "Custom";
+    diffSelect.appendChild(optCustom);
+
+    document.getElementById("gameDifficulty").appendChild(diffSelect);
+    // hidden custom input
+    let customInputCont = document.createElement("div");
+    customInputCont.id = "customInputContainer";
+    customInputCont.style.display = "none";
+
+    let customInputLabel = document.createElement("label");
+    customInputLabel.setAttribute("for", "customInput");
+    customInputLabel.textContent = "How many cards do you want (up to 100 and must be an even number)";
+    customInputCont.appendChild(customInputLabel);
+
+    let customInput = document.createElement("input");
+    customInput.id = "customInput";
+    customInput.type = "number";
+    customInput.min = 4;
+    customInput.max = 100;
+    customInputCont.appendChild(customInput);
+
+    document.getElementById("gameDifficulty").appendChild(customInputCont);
 });
 
 
@@ -194,8 +237,8 @@ function turnOver(event) {
             cardShowing = card;
         } else {
             turn2back(card);
-        } 
-        
+        }
+
     } else if (cardShowing == card) {
         turn2back(card);
         cardShowing = -1;
@@ -215,9 +258,9 @@ function turnOver(event) {
         // Update the current score display
         document.getElementById('current-score').textContent = `Current Score: ${currentScore}`;
     }
-        } 
+}
 
-    
+
 
 
 function checkFinished() {
