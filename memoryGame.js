@@ -358,7 +358,8 @@ function turn2None(card) {
  * Function to close the game
  */
 function closeGame() {
-
+    //stop timer
+    stopTimer();
     //clear score
     $("#score").text("");
 
