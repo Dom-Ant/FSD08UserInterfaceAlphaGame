@@ -192,9 +192,9 @@ function newGame() {
     if (diff == "Easy") {
         cardsNum = 12;
     } else if (diff == "Medium") {
-        cardsNum = 24;
+        cardsNum = 20;
     } else if (diff == "Hard") {
-        cardsNum = 36;
+        cardsNum = 30;
     } else if (diff == "Custom") {
         let customInput = $("#customInput").val();
         if (!isNaN(customInput) && customInput % 2 == 0 && customInput !== null && customInput >= 4 && customInput <= 100) {
@@ -295,16 +295,19 @@ function checkFinished() {
             gameDone = false;
             break;
         }
-        if (currentScore < bestScore) {
-            bestScore = currentScore;
-            // Update the best score display
-            document.getElementById('best-score').textContent = `Best Score: ${bestScore}`;
-        }
+
     }
 
     if (gameDone) {
         stopTimer();
         showScore();
+
+        if (currentScore < bestScore) {
+            bestScore = currentScore;
+            // Update the best score display
+            document.getElementById('best-score').textContent = `Best Score: ${bestScore}`;
+        }
+
     }
 
     console.log('showing:' + cardShowing);
@@ -336,7 +339,7 @@ function turn2back(card) {
     setTimeout(() => {
         card.setAttribute("showing", "back");
         card.src = "images/cardback.jpg";
-    }, 1000);
+    }, 800);
 
 
 }
@@ -348,7 +351,7 @@ function turn2None(card) {
     setTimeout(() => {
         card.setAttribute("showing", "none");
         card.src = "Images/Match.jpg";
-    }, 1000);
+    }, 800);
 
 }
 /**
