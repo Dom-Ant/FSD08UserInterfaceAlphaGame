@@ -281,10 +281,6 @@ function checkFinished() {
     }
 
     if (gameDone) {
-        showScore();
-    }
-
-    if (gameDone) {
         stopTimer();
         showScore();
     }
