@@ -2,7 +2,9 @@
 let timerInterval;
 let timerCount = 0;
 
-// Function to start the timer
+/**
+ *  Function to start the timer
+ */
 function startTimer() {
     // Start the timer and update every second
     timerInterval = setInterval(() => {
@@ -14,13 +16,15 @@ function startTimer() {
         document.getElementById('timer-seconds').textContent = `${seconds < 10 ? '0' + seconds : seconds}`;
     }, 1000);
 }
-
-// Function to stop the timer
+/**
+ *  Function to stop the timer
+ */
 function stopTimer() {
     clearInterval(timerInterval);
 }
-
-// Function to reset the timer
+/**
+ * Function to reset the timer
+ */
 function resetTimer() {
     stopTimer();
     timerCount = 0;
@@ -31,9 +35,9 @@ function resetTimer() {
 let currentScore = 0;
 let bestScore = Infinity;
 
-//html
+// HTML elements setup
 document.addEventListener("DOMContentLoaded", (event) => {
-    //header
+    // Header
     let header1 = document.getElementById("gameHeader");
     let h1Top = document.createElement("h1");
     h1Top.textContent = "Memory Game";
@@ -69,7 +73,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
     bestScoreEl.textContent = `Best Score: ${bestScore === Infinity ? '-' : bestScore}`;
     header1.appendChild(bestScoreEl);
 
-    //difficulty selector html
+    // Difficulty selector html
     let labelD = document.createElement("label");
     labelD.setAttribute("for", "chooseDiff");
     labelD.textContent = "Select Difficulty:";
@@ -95,7 +99,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
     diffSelect.appendChild(optCustom);
 
     document.getElementById("gameDifficulty").appendChild(diffSelect);
-    // hidden custom input
+    // Hidden custom input
     let customInputCont = document.createElement("div");
     customInputCont.id = "customInputContainer";
     customInputCont.style.display = "none";
@@ -117,7 +121,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
 
 
 
-//img pool
+// Image pool
 const arrImg = ["images/1.jpg"
     , "images/2.jpg"
     , "images/3.jpg"
@@ -129,9 +133,14 @@ const arrImg = ["images/1.jpg"
     , "images/9.jpg"
 ];
 
-
+// global 
 var cardsNum;
 var cardShowing = -1;
+
+/**
+ *  Function to initialize game elements
+ * @param {boolean} blnStart - trigger
+ */
 function initialize(blnStart) {
 
     if (blnStart) {
@@ -147,7 +156,9 @@ function initialize(blnStart) {
     }
 
 }
-
+/**
+ * Function to show/hide custom input
+ */
 function toggleCustom() {
     if ($("#chooseDiff").val() == "Custom") {
         $("#customInputContainer").css("display", "block");
@@ -155,7 +166,9 @@ function toggleCustom() {
         $("#customInputContainer").css("display", "none");
     }
 }
-
+/**
+ * Function to start a new game
+ */
 function newGame() {
 
     resetTimer();
@@ -219,14 +232,21 @@ function newGame() {
     console.log(cardsContainer.children);
 
 }
-//shuffle order of array
+
+/**
+ * shuffle order of array
+ * @param {*} arr - array
+ */
 function shuffle(arr) {
     for (let i = arr.length; i > 0; i--) {
         let j = Math.floor(Math.random() * i);
         [arr[i - 1], arr[j]] = [arr[j], arr[i - 1]];
     }
 }
-
+/**
+ * Turn card over
+ * @param {*} event - click
+ */
 function turnOver(event) {
     card = event.target;
     if (card.getAttribute("showing") == "none") return;
@@ -262,7 +282,9 @@ function turnOver(event) {
 
 
 
-
+/**
+ * Function to check if game is finished
+ */
 function checkFinished() {
     let cardsContainer = document.getElementById("cardsContainer");
 
@@ -290,16 +312,26 @@ function checkFinished() {
 
 
 }
-
+/**
+ * Function to display the game score
+ */
 function showScore() {
     $("#score").append("Success!");
 }
-
+/**
+ * Function to turn a card to the front image
+ * @param {*} card - clicked card
+ */
 function turn2front(card) {
     card.setAttribute("showing", "front");
     card.src = arrImg[card.getAttribute("num")];
 
 }
+
+/**
+ * Function to turn a card to the back image
+ * @param {*} card - clicked card
+ */
 function turn2back(card) {
     setTimeout(() => {
         card.setAttribute("showing", "back");
@@ -308,7 +340,10 @@ function turn2back(card) {
 
 
 }
-
+/**
+ * Function to turn a card to Match image
+ * @param {*} card - clicked card
+ */
 function turn2None(card) {
     setTimeout(() => {
         card.setAttribute("showing", "none");
@@ -316,7 +351,9 @@ function turn2None(card) {
     }, 1000);
 
 }
-
+/**
+ * Function to close the game
+ */
 function closeGame() {
 
     //clear score
@@ -325,7 +362,7 @@ function closeGame() {
     initialize(true);
 }
 
-
+//initialize
 $(document).ready(function () {
     initialize(true);
     toggleCustom();
