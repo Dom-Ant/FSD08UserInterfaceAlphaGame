@@ -87,11 +87,11 @@ document.addEventListener("DOMContentLoaded", (event) => {
     diffSelect.appendChild(optEasy);
     let optMed = document.createElement("option");
     optMed.value = "Medium";
-    optMed.text = "Medium (24 cards)";
+    optMed.text = "Medium (18 cards)";
     diffSelect.appendChild(optMed);
     let optHard = document.createElement("option");
     optHard.value = "Hard";
-    optHard.text = "Hard (36 cards)";
+    optHard.text = "Hard (30 cards)";
     diffSelect.appendChild(optHard);
     let optCustom = document.createElement("option");
     optCustom.value = "Custom";
@@ -192,7 +192,7 @@ function newGame() {
     if (diff == "Easy") {
         cardsNum = 12;
     } else if (diff == "Medium") {
-        cardsNum = 20;
+        cardsNum = 18;
     } else if (diff == "Hard") {
         cardsNum = 30;
     } else if (diff == "Custom") {
